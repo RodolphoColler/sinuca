@@ -1,0 +1,46 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Player {
+  id                Int                 @id @default(autoincrement())
+  name              String              @unique
+  player            SingleMatch[]       @relation("player_one")
+  player_two        SingleMatch[]       @relation("player_two")
+  duo_player        DuoPlayer[]         @relation("duo_player_one")
+  duo_player_two    DuoPlayer[]         @relation("duo_player_two")
+
+}
+
+model SingleMatch {
+  id                Int                @id @default(autoincrement())
+  player_one        Player             @relation("player_one", fields: [player_one_id], references: [id])
+  player_two        Player             @relation("player_two", fields: [player_two_id], references: [id])
+  player_one_id     Int
+  player_two_id     Int
+  result            Int
+}
+
+model DuoPlayer {
+  id                Int                @id @default(autoincrement())
+  player_one        Player             @relation("duo_player_one", fields: [player_one_id], references: [id])
+  player_two        Player             @relation("duo_player_two", fields: [player_two_id], references: [id])
+  player_one_id     Int
+  player_two_id     Int
+
+  duo_player        DuoMatch[]        @relation("duo_player_one")
+  duo_player_two    DuoMatch[]        @relation("duo_player_two")
+}
+
+model DuoMatch {
+  id               Int                @id @default(autoincrement())
+  duo_player       DuoPlayer          @relation("duo_player_one", fields: [duo_one_id], references: [id])
+  duo_player_two   DuoPlayer          @relation("duo_player_two", fields: [duo_two_id], references: [id])
+  duo_one_id       Int
+  duo_two_id       Int
+  result           Int
+}
