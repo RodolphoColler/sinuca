@@ -18,7 +18,7 @@ export async function create(req: Request, res: Response, next: NextFunction): P
   }
 }
 
-export async function read(req: Request, res: Response, next: NextFunction): Promise<any>  {
+export async function read(_req: Request, res: Response, next: NextFunction): Promise<any>  {
   try {
     const duoPlayer = await prisma.duoPlayer.findMany({
       include: {
