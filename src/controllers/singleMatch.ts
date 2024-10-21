@@ -36,3 +36,30 @@ export async function read(_req: Request, res: Response, next: NextFunction): Pr
   }
 }
 
+export async function readByDate(req: Request, res: Response, next: NextFunction): Promise<any>  {
+  try {
+    const { startDate, endDate } = req.params as any;
+
+    const [startYear, startMonth, startDay] = startDate.split('-');
+
+    const [year, month, day] = endDate.split('-');
+
+    const singleMatch = await prisma.singleMatch.findMany({
+      include: {
+        player_one: true,
+        player_two: true,
+      },
+      where: {
+        date: {
+          gte: new Date(`${startYear}-${startMonth}-${startDay}`),
+          lte: new Date(`${year}-${month}-${day}`),
+        },
+      },
+    });
+
+    return res.status(200).json({ singleMatch });
+  } catch (error) {
+    return next(error);
+  }
+}
+
