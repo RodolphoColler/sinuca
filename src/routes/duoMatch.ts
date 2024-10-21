@@ -1,9 +1,11 @@
 import { Router } from 'express';
-import { create, read } from "../controllers/duoMatch";
+import { create, read, readByDate } from "../controllers/duoMatch";
 
 const router = Router();
 
 router.post('/', create);
+
+router.get('/date/:startDate/:endDate', readByDate);
 
 router.get('/', read);
 
