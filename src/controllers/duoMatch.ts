@@ -26,6 +26,9 @@ export async function read(_req: Request, res: Response, next: NextFunction): Pr
       include: { 
         duo_player: {
           include: { player_one: true, player_two: true }
+        },
+        duo_player_two: {
+          include: { player_one: true, player_two: true }
         }
     } });
 
