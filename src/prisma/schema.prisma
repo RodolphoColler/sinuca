@@ -23,6 +23,7 @@ model SingleMatch {
   player_one_id     Int
   player_two_id     Int
   result            Int
+  date              DateTime          @default(now())
 }
 
 model DuoPlayer {
@@ -43,4 +44,5 @@ model DuoMatch {
   duo_one_id       Int
   duo_two_id       Int
   result           Int
+  date             DateTime          @default(now())
 }
